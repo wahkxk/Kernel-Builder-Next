@@ -1,19 +1,18 @@
 [
   {
     "kernelSource": {
-      "name": "Mi4",
+      "name": "Xiaomi4",
       "repo": "https://github.com/SonicBSV/android_kernel_xiaomi_markw-4.9",
       "branch": "master",
       "device": "markw",
       "defconfig": "markw_defconfig"
     },
-    "withKernelSU": false,
     "toolchains": [
       {
         "repo": "https://github.com/LineageOS/android_prebuilts_clang_kernel_linux-x86_clang-r416183b",
         "branch": "lineage-20.0",
         "name": "clang",
-        "binPath": [
+        "binaryEnv": [
           "bin"
         ]
       },
@@ -21,7 +20,7 @@
         "repo": "https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9",
         "branch": "lineage-19.1",
         "name": "aarch64",
-        "binPath": [
+        "binaryEnv": [
           "bin"
         ]
       },
@@ -29,16 +28,16 @@
         "repo": "https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9",
         "branch": "lineage-19.1",
         "name": "arm",
-        "binPath": [
+        "binaryEnv": [
           "bin"
         ]
       }
     ],
-    "ccache": true,
+    "enableCcache": true,
     "params": {
       "ARCH": "arm64",
       "CC": "clang",
-      "externalCommand": {
+      "externalCommands": {
         "CLANG_TRIPLE": "aarch64-linux-gnu-",
         "CROSS_COMPILE": "aarch64-linux-android-",
         "CROSS_COMPILE_ARM32": "arm-linux-androideabi-",
@@ -57,10 +56,9 @@
       }
     },
     "AnyKernel3": {
-      "use": false,
-      "release": false,
-      "repo": "",
-      "branch": ""
-    }
+      "use": true,
+      "release": true
+    },
+    "enableKernelSU": true
   }
 ]
