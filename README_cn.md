@@ -1,6 +1,6 @@
 <div align = center>
 
-<img src="./.assets/DogDayAndroid.png" width="200" height="175" alt="banner">
+<img src="./.assets/logo.svg" width="200" height="175" alt="banner">
 
 <h1>构建属于你自己的安卓内核镜像</h1>
 

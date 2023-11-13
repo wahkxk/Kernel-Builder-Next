@@ -1,6 +1,6 @@
 <div align = center>
 
-<img src="./.assets/DogDayAndroid.png" width="200" height="175" alt="banner">
+<img src="./.assets/logo.svg" width="200" height="150" alt="banner">
 
 <h1>Build Your Own Kernel with Github Action</h1>
 
