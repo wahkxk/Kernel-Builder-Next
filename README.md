@@ -31,8 +31,9 @@ This Github Action helps you build kernels. It reads multiple kernel sources fro
 - [ ] Use `MagiskBoot` to generate `boot.img`
 - [ ] Use script to compile kernel locally
 - [ ] Webpage for online kernel building
-- [ ] Support origin / custom AnyKernel3
-- [ ] Custom build info
+- [x] Support origin / custom AnyKernel3
+- [x] Custom build info
+- [x] Suppor `Docker`
 
 # Github Action
 
