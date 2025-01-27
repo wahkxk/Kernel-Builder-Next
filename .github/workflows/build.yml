@@ -67,6 +67,9 @@ jobs:
       # Whether to enable KernelSU
       ENABLE_KERNELSU: ${{ matrix.CONFIG.enableKernelSU }}
 
+      # Whether to enable KernelSU SFS
+      ENABLE_KERNELSU_SFS: ${{ matrix.CONFIG.KernelSUSFS.enable }}
+
       # Whether to enable LXC docker
       ENABLE_LXC: ${{ matrix.CONFIG.enableLXC }}
 
@@ -241,12 +244,83 @@ jobs:
             rm -rf "./drivers/kernelsu"
           fi
 
-          # Apply new KernelSU patches
+          # Apply new KernelSU patchesnext
           curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -s next
 
           echo -e "CONFIG_KPROBES=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
           echo -e "CONFIG_HAVE_KPROBES=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
           echo -e "CONFIG_KPROBE_EVENTS=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+
+          cat arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+
+      - name: 😋 Setup KSU SUSFS
+        env: 
+          ARCH: ${{ steps.generate-args.outputs.ARCH }}
+          DEFCONFIG: ${{ env.WORKSPACE }}/${{ env.KERNEL_NAME }}/arch/${{ steps.generate-args.outputs.ARCH }}/configs/${{env.KERNEL_DEFCONFIG_PATH}}
+          SFS_BRANCH: ${{ matrix.CONFIG.KernelSUSFS.branches }}
+        if: ${{ env.ENABLE_KERNELSU == 'true' && env.ENABLE_KERNELSU_SFS == 'true' }}
+        run: |
+          git clone https://gitlab.com/simonpunk/susfs4ksu.git -b "${{env.SFS_BRANCH}}"
+          git clone https://github.com/luyanci/kernel_patches.git
+
+          cd ${{env.KERNEL_NAME}}
+          cp ../susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ./KernelSU-Next/
+          cp ../susfs4ksu/kernel_patches/50_add_susfs_in_${{env.SFS_BRANCH}}.patch ./
+          cp ../susfs4ksu/kernel_patches/fs/* ./fs/
+          cp ../susfs4ksu/kernel_patches/include/linux/* ./include/linux/
+
+          cd ./KernelSU-Next
+          
+          # Apply SUSFS patch for KernelSU
+          patch -p1 --forward < 10_enable_susfs_for_ksu.patch || true
+          
+          # Apply makefile for ksu on Non-GKI
+          echo "Patch KSU makefile"
+          cp ../../kernel_patches/makefile-fix.patch ./
+          patch -p1 --forward < makefile-fix.patch || true
+
+
+          # Change to common directory and apply SUSFS patch
+          cd ..
+          patch -p1 < 50_add_susfs_in_${{env.SFS_BRANCH}}.patch || true
+
+          # TODO: ADD SUSFS NEXT (FIX)
+          echo "Applying next SUSFS patches..."
+          cp ../kernel_patches/apk_sign.c_fix.patch ./
+          patch -p1 -F 3 < apk_sign.c_fix.patch
+          cp ../kernel_patches/core_hook.c_fix.patch ./
+          patch -p1 --fuzz=3 < core_hook.c_fix.patch
+          # cp ../kernel_patches/selinux.c_fix.patch ./
+          # patch -p1 -F 3 < selinux.c_fix.patch
+                
+          # Apply Hide Stuff Patches
+          cp ../kernel_patches/69_hide_stuff.patch ./
+          patch -p1 -F 3 < 69_hide_stuff.patch || true
+          
+          # Add SUSFS configuration settings
+          echo "Adding configuration settings to defconfig..."
+
+
+          echo "CONFIG_KSU=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_SUS_PATH=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_SUS_MOUNT=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_KSU_DEFAULT_MOUNT=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_BIND_MOUNT=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_SUS_KSTAT=n" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_SUS_OVERLAYFS=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_TRY_UMOUNT=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_SPOOF_UNAME=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_ENABLE_LOG=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          echo "CONFIG_KSU_SUSFS_SUS_SU=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
+          
+          # Add additional tmpfs config setting
+          echo "CONFIG_TMPFS_XATTR=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
 
           cat arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
 
