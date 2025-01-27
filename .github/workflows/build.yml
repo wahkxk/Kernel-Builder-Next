@@ -1,6 +1,9 @@
 name: Build kernels vanlia
 
 on:
+  push:
+    paths:
+      - ".github/workflows/build.yml"
   workflow_dispatch:
   schedule:
     - cron: "0 11 * * 0"
