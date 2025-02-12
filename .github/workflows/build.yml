@@ -277,7 +277,7 @@ jobs:
           # Apply makefile for ksu to auto patch kernelSource
           echo "Patch KSU makefile to auto patch kernelSource"
           cp ../../kernel_patches/rksu1-Kernel-Auto-adding-path_umount-patch-into-the-kernel.patch ./rksu-Kernel-Auto-adding-path_umount-patch-into-the-kernel.patch
-          patch -p1 --forward < rksu-Kernel-Auto-adding-path_umount-patch-into-the-kernel.patch || true
+          # patch -p1 --forward < rksu-Kernel-Auto-adding-path_umount-patch-into-the-kernel.patch || true
 
           # Change to common directory and apply SUSFS patch
           cd ..
