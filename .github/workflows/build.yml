@@ -245,7 +245,7 @@ jobs:
           fi
 
           # Apply new KernelSU patches
-          curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s main
+          curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s susfs-v1.5.5
 
           echo -e "CONFIG_KPROBES=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
           echo -e "CONFIG_HAVE_KPROBES=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
@@ -272,12 +272,7 @@ jobs:
           cd ./KernelSU
           
           # Apply SUSFS patch for KernelSU
-          patch -p1 --forward < 10_enable_susfs_for_ksu.patch || true
-          
-          # Apply makefile for ksu on Non-GKI
-          echo "Patch KSU makefile"
-          cp ../../kernel_patches/makefile-fix.patch ./
-          patch -p1 --forward < makefile-fix.patch || true
+          # patch -p1 --forward < 10_enable_susfs_for_ksu.patch || true
 
           # Apply makefile for ksu to auto patch kernelSource
           echo "Patch KSU makefile to auto patch kernelSource"
