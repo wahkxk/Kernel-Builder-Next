@@ -244,8 +244,8 @@ jobs:
             rm -rf "./drivers/kernelsu"
           fi
 
-          # Apply new KernelSU patchesnext
-          curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -s next
+          # Apply new KernelSU patches
+          curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s susfs-v1.5.5
 
           echo -e "CONFIG_KPROBES=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
           echo -e "CONFIG_HAVE_KPROBES=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
@@ -264,42 +264,31 @@ jobs:
           git clone https://github.com/luyanci/kernel_patches.git
 
           cd ${{env.KERNEL_NAME}}
-          cp ../susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ./KernelSU-Next/
+          cp ../susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ./KernelSU/
           cp ../susfs4ksu/kernel_patches/50_add_susfs_in_${{env.SFS_BRANCH}}.patch ./
           cp ../susfs4ksu/kernel_patches/fs/* ./fs/
           cp ../susfs4ksu/kernel_patches/include/linux/* ./include/linux/
 
-          cd ./KernelSU-Next
+          cd ./KernelSU
           
           # Apply SUSFS patch for KernelSU
-          patch -p1 --forward < 10_enable_susfs_for_ksu.patch || true
-          
-          # Apply makefile for ksu on Non-GKI
-          echo "Patch KSU makefile"
-          cp ../../kernel_patches/makefile-fix.patch ./
-          patch -p1 --forward < makefile-fix.patch || true
+          # patch -p1 --forward < 10_enable_susfs_for_ksu.patch || true
 
+          # Apply makefile for ksu to auto patch kernelSource
+          echo "Patch KSU makefile to auto patch kernelSource"
+          cp ../../kernel_patches/rksu2-Kernel-Auto-adding-path_umount-patch-into-the-kernel.patch ./rksu-Kernel-Auto-adding-path_umount-patch-into-the-kernel.patch
+          patch -p1 --forward < rksu-Kernel-Auto-adding-path_umount-patch-into-the-kernel.patch || true
 
           # Change to common directory and apply SUSFS patch
           cd ..
           patch -p1 < 50_add_susfs_in_${{env.SFS_BRANCH}}.patch || true
 
-          # TODO: ADD SUSFS NEXT (FIX)
-          echo "Applying next SUSFS patches..."
-          cp ../kernel_patches/apk_sign.c_fix.patch ./
-          patch -p1 -F 3 < apk_sign.c_fix.patch
-          cp ../kernel_patches/core_hook.c_fix.patch ./
-          patch -p1 --fuzz=3 < core_hook.c_fix.patch
-          # cp ../kernel_patches/selinux.c_fix.patch ./
-          # patch -p1 -F 3 < selinux.c_fix.patch
-                
           # Apply Hide Stuff Patches
           cp ../kernel_patches/69_hide_stuff.patch ./
           patch -p1 -F 3 < 69_hide_stuff.patch || true
           
           # Add SUSFS configuration settings
           echo "Adding configuration settings to defconfig..."
-
 
           echo "CONFIG_KSU=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
           echo "CONFIG_KSU_SUSFS=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_DEFCONFIG_PATH }}
