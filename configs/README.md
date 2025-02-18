@@ -44,7 +44,7 @@ This section contains basic configuration file configuration tutorials, as well 
     "params": {
       "ARCH": "arm64",
       "CC": "proton-clang/bin/clang",
-      "externalCommand": {
+      "externalCommands": {
         "CROSS_COMPILE": "proton-clang/bin/aarch64-linux-gnu-",
         "CROSS_COMPILE_ARM32": "proton-clang/bin/arm-linux-gnueabi-",
         "LD": "proton-clang/bin/ld.lld",
@@ -182,7 +182,7 @@ This section contains basic configuration file configuration tutorials, as well 
   "params": {
     "ARCH": "",
     "CC": "",
-    "externalCommand": {}
+    "externalCommands": {}
   },
   "AnyKernel3": {
     "use": false,
@@ -286,7 +286,7 @@ In this way, you can get the compiled toolchain compressed package in `.zip` | `
 | --------------------- | ------ | --------------------- | ---------------------------------------------------------------------- |
 | `ARCH`                | String | Architecture          | The architecture of the device, which can be queried using `uname -m`. |
 | `CC`                  | String | C Compiler Path       | The compiler used, usually `clang` or `gcc`.                           |
-| `externalCommand`     | Object | External Command Path | Additional parameter settings required for compilation.                |
+| `externalCommands`     | Object | External Command Path | Additional parameter settings required for compilation.                |
 
 For the `externalCommand` part, here is an example of the command that may be used during compilation:
 
