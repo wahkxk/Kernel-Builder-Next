@@ -48,7 +48,7 @@
     "params": {
       "ARCH": "arm64",
       "CC": "proton-clang/bin/clang",
-      "externalCommand": {
+      "externalCommands": {
         "CROSS_COMPILE": "proton-clang/bin/aarch64-linux-gnu-",
         "CROSS_COMPILE_ARM32": "proton-clang/bin/arm-linux-gnueabi-",
         "LD": "proton-clang/bin/ld.lld",
@@ -189,7 +189,7 @@
   "params": {
     "ARCH": "",
     "CC": "",
-    "externalCommand": {}
+    "externalCommands": {}
   },
   "AnyKernel3": {
     "use": false,
@@ -295,7 +295,7 @@
 | ----------------- | ------ | ------------ | ----------------------------------------- |
 | `ARCH`            | 字符串 | 架构         | 设备的架构，可以使用 `uname -m` 查询      |
 | `CC`              | 字符串 | C 编译器路径 | 所使用的编译器，一般为 `clang` 或者 `gcc` |
-| `externalCommand` | 对象   | 外部命令路径 | 编译所需要的额外的参数设定                |
+| `externalCommands` | 对象   | 外部命令路径 | 编译所需要的额外的参数设定                |
 
 对于 `externalCommand` 部分，下面先给出一个编译时候可能用到的指令例子：
 
