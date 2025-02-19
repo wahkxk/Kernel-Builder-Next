@@ -1,11 +1,11 @@
 [
     {
         "kernelSource": {
-            "name": "redcliff",
-            "repo": "https://github.com/SlackerState/android_kernel_xiaomi_sm6150",
-            "branch": "redcliff",
-            "device": "phoenix",
-            "defconfig": "phoenix_defconfig"
+            "name": "pissarro",
+            "repo": "https://github.com/Nova-Kernels/kernel_xiaomi_pissarro",
+            "branch": "lineage-21",
+            "device": "pissarro",
+            "defconfig": "pissarro_user_defconfig"
           },
           "toolchains": [
           {
@@ -40,7 +40,7 @@
             "use": true,
             "release": true,
             "custom": {
-            "repo": "https://github.com/luyanci/AnyKernel3",
+            "repo": "https://bgithub.xyz/luyanci/AnyKernel3",
             "branch": "master"
             }
           },
