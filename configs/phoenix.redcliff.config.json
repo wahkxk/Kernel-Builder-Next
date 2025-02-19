@@ -2,7 +2,7 @@
     {
         "kernelSource": {
             "name": "pissarro",
-            "repo": "https://bgithub.xyz/Nova-Kernels/kernel_xiaomi_pissarro",
+            "repo": "https://github.com/Nova-Kernels/kernel_xiaomi_pissarro.git",
             "branch": "lineage-21",
             "device": "pissarro",
             "defconfig": "pissarro_user_defconfig"
@@ -40,7 +40,7 @@
             "use": true,
             "release": true,
             "custom": {
-            "repo": "https://github.com/luyanci/AnyKernel3",
+            "repo": "https://bgithub.xyz/luyanci/AnyKernel3",
             "branch": "master"
             }
           },
