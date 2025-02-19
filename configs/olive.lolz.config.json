@@ -2,7 +2,7 @@
     {
         "kernelSource": {
             "name": "lgv35",
-            "repo": "https://github.com/LineageOS/android_kernel_lge_sdm845.git",
+            "repo": "https://guthub.com/LineageOS/android_kernel_lge_sdm845.git",
             "branch": "lineage-22.1",
             "device": "judyp",
             "defconfig": "lineageos_judyp_defconfig"
@@ -38,7 +38,7 @@
             "use": true,
             "release": true,
             "custom": {
-              "repo": "https://bgithub.xyz/luyanci/Ak3",
+              "repo": "https://github.com/luyanci/Ak3",
               "branch": "hm8"
               }
           },
