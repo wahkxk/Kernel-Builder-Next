@@ -1,11 +1,11 @@
 [
     {
         "kernelSource": {
-            "name": "Redmi8-LOLZ",
-            "repo": "https://github.com/Jprimero15/lolz_kernel_redmi8",
-            "branch": "V22",
-            "device": "olive",
-            "defconfig": "lolz_olive_defconfig"
+            "name": "lgv35",
+            "repo": "https://github.com/LineageOS/android_kernel_lge_sdm845.git",
+            "branch": "lineage-22.1",
+            "device": "judyp",
+            "defconfig": "lineageos_judyp_defconfig"
           },
           "toolchains": [
           {
@@ -38,7 +38,7 @@
             "use": true,
             "release": true,
             "custom": {
-              "repo": "https://github.com/luyanci/Ak3",
+              "repo": "https://bgithub.xyz/luyanci/Ak3",
               "branch": "hm8"
               }
           },
