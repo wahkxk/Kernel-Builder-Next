@@ -2,8 +2,8 @@
     {
         "kernelSource": {
             "name": "pissarro",
-            "repo": "https://github.com/Nova-Kernels/kernel_xiaomi_pissarro.git",
-            "branch": "lineage-21",
+            "repo": "https://github.com/MiCode/Xiaomi_Kernel_OpenSource.git",
+            "branch": "pissarro-r-oss",
             "device": "pissarro",
             "defconfig": "pissarro_user_defconfig"
           },
