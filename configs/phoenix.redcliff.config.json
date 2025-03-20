@@ -40,7 +40,7 @@
             "use": true,
             "release": true,
             "custom": {
-            "repo": "https://github.com/luyanci/AnyKernel3",
+            "repo": "https://github.com/osm0sis/AnyKernel3",
             "branch": "master"
             }
           },
