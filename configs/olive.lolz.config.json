@@ -5,7 +5,7 @@
             "repo": "https://github.com/jenneron/android_kernel_lge_judyp.git",
             "branch": "master",
             "device": "judyp",
-            "defconfig": "judyp_kt_kr_defconfig"
+            "defconfig": "judyp_lgu_kr-perf_defconfig"
           },
           "toolchains": [
           {
