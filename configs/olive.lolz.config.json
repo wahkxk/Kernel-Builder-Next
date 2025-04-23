@@ -2,10 +2,10 @@
     {
         "kernelSource": {
             "name": "lgv35",
-            "repo": "https://github.com/jenneron/android_kernel_lge_judyp.git",
-            "branch": "master",
+            "repo": "https://github.com/EmanuelCN/android_kernel_lge_sdm845",
+            "branch": "U",
             "device": "judyp",
-            "defconfig": "judyp_lao_com_defconfig"
+            "defconfig": "judyln_lgu_kr_defconfig"
           },
           "toolchains": [
           {
@@ -40,7 +40,7 @@
             "use": true,
             "release": true,
             "custom": {
-            "repo": "https://bgithub.xyz/luyanci/AnyKernel3",
+            "repo": "https://github.com/luyanci/AnyKernel3",
             "branch": "master"
             }
           },
