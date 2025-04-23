@@ -3,9 +3,9 @@
         "kernelSource": {
             "name": "lgv35",
             "repo": "https://github.com/EmanuelCN/android_kernel_lge_sdm845",
-            "branch": "U",
+            "branch": "new",
             "device": "judyp",
-            "defconfig": "judyln_lgu_kr_defconfig"
+            "defconfig": "judyp_lao_com_defconfig"
           },
           "toolchains": [
           {
