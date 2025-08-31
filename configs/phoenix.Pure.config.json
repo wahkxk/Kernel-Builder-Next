@@ -1,11 +1,11 @@
 [
     {
         "kernelSource": { 
-            "name": "Pure-phoenix", 
-            "repo": "https://github.com/Pzqqt/android_kernel_xiaomi_sm6150-1", 
+            "name": "parriss", 
+            "repo": "https://github.com/dereference23/kernel_xiaomi_sm6375.git", 
             "branch": "pure-phoenix", 
-            "device": "phoenix", 
-            "defconfig": "phoenix_defconfig" 
+            "device": "p", 
+            "defconfig": "gki_defconfig" 
           }, 
           "toolchains": [ 
             {  
