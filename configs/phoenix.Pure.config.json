@@ -1,10 +1,10 @@
 [
     {
         "kernelSource": { 
-            "name": "parriss", 
+            "name": "pissarro", 
             "repo": "https://github.com/dereference23/kernel_xiaomi_sm6375.git", 
-            "branch": "pure-phoenix", 
-            "device": "p", 
+            "branch": "main", 
+            "device": "pissarro", 
             "defconfig": "gki_defconfig" 
           }, 
           "toolchains": [ 
