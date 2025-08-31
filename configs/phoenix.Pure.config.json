@@ -5,7 +5,7 @@
             "repo": "https://github.com/dereference23/kernel_xiaomi_sm6375.git", 
             "branch": "main", 
             "device": "pissarro", 
-            "defconfig": "gki_defconfig" 
+            "defconfig": "veux_defconfig" 
           }, 
           "toolchains": [ 
             {  
